@@ -89,12 +89,11 @@ final router = GoRouter(
         child: SubjectAddToClassScreen(),
       ),
     ),
-
     GoRoute(
       path: AppRoutes.registeredUsersScreen.path,
       name: AppRoutes.registeredUsersScreen.name,
       pageBuilder: (context, state) => const CupertinoPage(
-        child: RegisteredUserScreen(),
+        child: RegisteredUsersScreen(),
       ),
     ),
     GoRoute(
@@ -117,7 +116,8 @@ final router = GoRouter(
       pageBuilder: (context, state) => const CupertinoPage(
         child: SelectSubjectForRegistrationScreen(),
       ),
-    ),GoRoute(
+    ),
+    GoRoute(
       path: AppRoutes.registeredStudentDataScreen.path,
       name: AppRoutes.registeredStudentDataScreen.name,
       pageBuilder: (context, state) => const CupertinoPage(

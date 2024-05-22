@@ -5,6 +5,7 @@ import 'package:hamon_machine_task/data/repositories/classroom_repository_impl.d
 import 'package:hamon_machine_task/data/repositories/registration_repository_impl.dart';
 import 'package:hamon_machine_task/data/repositories/student_repository_impl.dart';
 import 'package:hamon_machine_task/data/repositories/subject_repository_impl.dart';
+import 'package:hamon_machine_task/data/services/connectivity_service_impl.dart';
 import 'package:hamon_machine_task/domain/use_cases/add_registration.dart';
 import 'package:hamon_machine_task/domain/use_cases/assign_subject_to_classroom.dart';
 import 'package:hamon_machine_task/domain/use_cases/get_all_classrooms.dart';
@@ -21,6 +22,7 @@ import 'package:hamon_machine_task/core/utils/router.dart';
 import 'package:hamon_machine_task/core/utils/theme/app_theme.dart';
 
 import 'presentation/providers/classroom_provider.dart';
+import 'presentation/providers/connectivity_provider.dart';
 import 'presentation/providers/registration_provider.dart';
 import 'presentation/providers/student_provider.dart';
 import 'presentation/providers/subject_providers.dart';
@@ -32,6 +34,7 @@ void main() async{
   final subjectRepository = SubjectRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
   final classroomRepository = ClassroomRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
   final registrationRepository = RegistrationRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
+  final connectivityRepository = ConnectivityServiceImpl();
   runApp(
     MultiProvider(
       providers: [
@@ -60,6 +63,11 @@ void main() async{
             getRegistrationById: GetRegistrationById(registrationRepository),
             addRegistration: AddRegistration(registrationRepository),
             removeRegistration: RemoveRegistration(registrationRepository),
+          ),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => ConnectivityProvider(
+            connectivityService: connectivityRepository,
           ),
         ),
       ],
