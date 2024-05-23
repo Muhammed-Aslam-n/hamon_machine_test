@@ -1,57 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:hamon_machine_task/core/utils/theme/app_textsyle.dart';
+
+const greenColor = Color(0xFFAAC9BF);
+const blueColor = Color(0xFFD8EBFD);
+const mildRedColor = Color(0xFFFFE0DD);
+const mildYellowColor = Color(0xFFFFF3D9);
+
+const sfProText = 'SFProTextRegular';
+const sfProDisplay = 'SFProDisplayRegular';
 
 class AppTheme {
-  static const Color primaryColor = Color(0xFF1E90FF); // Dodgerblue
-  static const Color accentColor = Color(0xFFB2DFDB); // Light Green
-  static const Color textColor = Colors.black;
-  static const Color secondaryTextColor = Colors.grey;
+  static final AppTextStyle _textStyle = AppTextStyle.instance;
+  static const Color primaryColor = Color(0xFFD1D1D1);
 
   static ThemeData get theme {
     return ThemeData(
-      primaryColor: primaryColor,
-      hintColor: accentColor,
-      scaffoldBackgroundColor: Colors.white,
-      appBarTheme: const AppBarTheme(
-        color: Colors.white,
-        iconTheme: IconThemeData(color: primaryColor),
-        elevation: 0,
-      ),
-      buttonTheme: ButtonThemeData(
-        buttonColor: accentColor,
+      primaryColor: greenColor,
+      scaffoldBackgroundColor: const Color(0xFFf5f9fa),
+      appBarTheme: const AppBarTheme(color: Color(0xFFf5f9fa)),
+      listTileTheme: ListTileThemeData(
+        tileColor: primaryColor,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
+          borderRadius: BorderRadius.circular(10),
         ),
-        textTheme: ButtonTextTheme.primary,
+
       ),
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
+      textTheme: TextTheme(
+        displayLarge: _textStyle.displayLarge,
+        displayMedium: _textStyle.displayMedium,
+        displaySmall: _textStyle.displaySmall,
+        headlineLarge: _textStyle.headlineLarge,
+        headlineMedium: _textStyle.headlineMedium,
+        headlineSmall: _textStyle.headlineSmall,
+        titleLarge: _textStyle.titleLarge,
+        titleSmall: _textStyle.titleSmall,
+        titleMedium: _textStyle.titleMedium,
+        labelLarge: _textStyle.labelLarge,
+        labelMedium: _textStyle.labelMedium,
+        labelSmall: _textStyle.labelSmall,
+        bodyLarge: _textStyle.bodyLarge,
+        bodyMedium: _textStyle.bodyMedium,
+        bodySmall: _textStyle.bodySmall,
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(
+          backgroundColor: greenColor,
+          fixedSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+            borderRadius: BorderRadius.circular(12),
           ),
-        ),
-      ),
-      textButtonTheme: TextButtonThemeData(
-        style: TextButton.styleFrom(
-          textStyle: const TextStyle(
-            color: primaryColor,
-            fontSize: 16,
-          ),
-        ),
-      ),
-      textTheme: const TextTheme(
-        bodyLarge: TextStyle(color: textColor),
-        bodyMedium: TextStyle(color: secondaryTextColor),
-        titleLarge: TextStyle(
-          color: primaryColor,
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      cardTheme: CardTheme(
-        color: Colors.white,
-        elevation: 2,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8.0),
         ),
       ),
     );

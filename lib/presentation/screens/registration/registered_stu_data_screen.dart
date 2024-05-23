@@ -10,6 +10,14 @@ class RegisteredStudentDataScreen extends StatefulWidget {
 class _RegisteredStudentDataScreenState extends State<RegisteredStudentDataScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text('Registration'),
+          ],
+        ),
+      ),
+    );
   }
 }

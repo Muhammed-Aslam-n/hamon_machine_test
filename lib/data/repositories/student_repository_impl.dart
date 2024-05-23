@@ -1,5 +1,6 @@
 
 import 'package:dio/dio.dart';
+import 'package:hamon_machine_task/core/utils/logger.dart';
 import 'package:hamon_machine_task/data/models/student_model.dart';
 import 'package:hamon_machine_task/domain/entities/students_model.dart';
 import 'package:hamon_machine_task/domain/repositories/student_repository.dart';
@@ -13,7 +14,7 @@ class StudentRepositoryImpl implements StudentRepository {
   @override
   Future<List<Student>> getAllStudents() async {
     final response = await dio.get('/students', queryParameters: {'api_key': apiKey});
-    final students = (response.data as List).map((json) => StudentModel.fromJson(json)).toList();
+    final students = (response.data['students'] as List).map((json) => StudentModel.fromJson(json)).toList();
     return students;
   }
 

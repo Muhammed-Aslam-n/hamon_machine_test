@@ -60,7 +60,6 @@ class _LaunchScreenState extends State<LaunchScreen> with TickerProviderStateMix
     Timer(const Duration(seconds: 4), () {
       setState(() {
         _isLoading = false;
-        printInfo('isLoadingValue $_isLoading');
 
         _checkAuthState();
       });

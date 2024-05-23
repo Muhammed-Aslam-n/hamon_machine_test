@@ -10,6 +10,14 @@ class ClassroomListingScreen extends StatefulWidget {
 class _ClassroomListingScreenState extends State<ClassroomListingScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text('Class Rooms'),
+          ],
+        ),
+      ),
+    );
   }
 }

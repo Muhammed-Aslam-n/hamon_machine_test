@@ -29,7 +29,11 @@ import 'presentation/providers/subject_providers.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Dio dio = Dio();
+  Dio dio = Dio(
+    BaseOptions(
+      baseUrl: ApiConstants.baseUrl
+    )
+  );
   final studentRepository = StudentRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
   final subjectRepository = SubjectRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
   final classroomRepository = ClassroomRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
