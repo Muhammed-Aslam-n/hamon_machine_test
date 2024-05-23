@@ -13,7 +13,7 @@ class SubjectRepositoryImpl implements SubjectRepository {
   @override
   Future<List<Subject>> getAllSubjects() async {
     final response = await dio.get('/subjects', queryParameters: {'api_key': apiKey});
-    final subjects = (response.data as List).map((json) => SubjectModel.fromJson(json)).toList();
+    final subjects = (response.data['subjects'] as List).map((json) => SubjectModel.fromJson(json)).toList();
     return subjects;
   }
 

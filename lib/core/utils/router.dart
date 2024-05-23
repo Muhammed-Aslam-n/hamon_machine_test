@@ -46,7 +46,9 @@ final router = GoRouter(
       path: AppRoutes.studentDetailsScreen.path,
       name: AppRoutes.studentDetailsScreen.name,
       pageBuilder: (context, state) => CupertinoPage(
-        child: StudentDetailsScreen(studentId: state.extra as int,),
+        child: StudentDetailsScreen(
+          studentId: state.extra as int,
+        ),
       ),
     ),
     GoRoute(
@@ -59,7 +61,11 @@ final router = GoRouter(
     GoRoute(
       path: AppRoutes.subjectDetailsScreen.path,
       name: AppRoutes.subjectDetailsScreen.name,
-      builder: (context, state) => const SubjectDetailsScreen(),
+      pageBuilder: (context, state) => CupertinoPage(
+        child: SubjectDetailsScreen(
+          subjectId: state.extra as int,
+        ),
+      ),
     ),
     GoRoute(
       path: AppRoutes.classroomListingScreen.path,

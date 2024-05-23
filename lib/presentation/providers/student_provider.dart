@@ -19,6 +19,7 @@ class StudentProvider with ChangeNotifier {
     required this.getAllStudents,
     required this.getStudentById,
   });
+
   List<Student>? _students;
   Student? _student;
 
@@ -43,7 +44,6 @@ class StudentProvider with ChangeNotifier {
   }
 
   Future<void> fetchStudentById(int id) async {
-
     try {
       _isLoading = true;
       _error = false;
