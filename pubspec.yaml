@@ -44,6 +44,7 @@ dependencies:
   iconly: ^1.0.1
   dio: ^5.4.0
   connectivity_plus: 5.0.2
+  http:
 
 dev_dependencies:
   flutter_test:

@@ -12,19 +12,22 @@ class AppAssets {
   static const String noDataImage2 = 'assets/illustrations/noDataImage2.png';
   static const String noNetwork = 'assets/illustrations/noNetwork.png';
 
-  static const String errorOccurred1 = 'assets/illustrations/illustrations/errorOccurred1.png';
-  static const String errorOccurred2 = 'assets/illustrations/illustrations/errorOccurred2.png';
-  static const String errorOccurred3 = 'assets/illustrations/illustrations/errorOccurred3.png';
+  static const String errorOccurred1 = 'assets/illustrations/errorOccurred1.png';
+  static const String errorOccurred2 = 'assets/illustrations/errorOccurred2.png';
+  static const String errorOccurred3 = 'assets/illustrations/errorOccurred3.png';
 
-  static const String unexpected1 = 'assets/illustrations/illustrations/unexpected1.png';
-  static const String unexpected2 = 'assets/illustrations/illustrations/unexpected2.png';
-  static const String unexpected3 = 'assets/illustrations/illustrations/unexpected3.png';
+  static const String unexpected1 = 'assets/illustrations/unexpected1.png';
+  static const String unexpected2 = 'assets/illustrations/unexpected2.png';
+  static const String unexpected3 = 'assets/illustrations/unexpected3.png';
 
 
   static const String noUserImage = 'assets/illustrations/noUserImage.jpg';
 
   static const String studentProfileImage = 'assets/images/studentProfileImage.png';
   static const String subjectCoverImage = 'assets/images/subjectDetailCoverImage.png';
+
+  static const String chairLeftIcon = 'assets/icons/chair_left.png';
+  static const String chairRightIcon = 'assets/icons/chair_right.png';
 
 
 

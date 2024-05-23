@@ -13,13 +13,11 @@ class SubjectProvider with ChangeNotifier {
     required this.getSubjectById,
   });
 
-  bool _isLoading = false;
+  bool isLoading = false;
+  bool fetchSubjectByIdLoading = false;
 
-  bool get isLoading => _isLoading;
-
-  bool? _error;
-
-  bool? get error => _error;
+  bool? error;
+  bool? fetchSubByIdError;
 
   List<Subject>? _subjects;
   Subject? _subject;
@@ -30,33 +28,45 @@ class SubjectProvider with ChangeNotifier {
 
   Future<void> fetchAllSubjects() async {
     try {
-      _isLoading = true;
-      _error = false;
-      notifyListeners();
+      isLoading = true;
+      error = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
       _subjects = await getAllSubjects();
-      _isLoading = false;
-      notifyListeners();
+      isLoading = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     } catch (exc, stack) {
       printError('ExceptionCaughtWhileFetchingAllSubjects $exc \n $stack');
-      _isLoading = false;
-      _error = true;
-      notifyListeners();
+      isLoading = false;
+      isLoading = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     }
   }
 
   Future<void> fetchSubjectById(int id) async {
     try {
-      _isLoading = true;
-      _error = false;
-      notifyListeners();
+      fetchSubjectByIdLoading = true;
+      fetchSubByIdError = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
       _subject = await getSubjectById(id);
-      _isLoading = false;
-      notifyListeners();
+      fetchSubjectByIdLoading = false;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     } catch (exc, stack) {
       printError('ExceptionCaughtWhileFetchingSingleSubject $exc \n $stack');
-      _isLoading = false;
-      _error = true;
-      notifyListeners();
+      fetchSubjectByIdLoading = false;
+      fetchSubByIdError = true;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     }
   }
 }

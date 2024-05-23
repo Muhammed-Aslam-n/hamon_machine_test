@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:hamon_machine_task/core/utils/app_assets.dart';
 import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
-import 'package:hamon_machine_task/domain/entities/students_model.dart';
 import 'package:hamon_machine_task/domain/entities/subject_entities.dart';
-import 'package:hamon_machine_task/presentation/providers/student_provider.dart';
 import 'package:hamon_machine_task/presentation/providers/subject_providers.dart';
 import 'package:hamon_machine_task/presentation/widgets/status_widgets.dart';
 import 'package:provider/provider.dart';
@@ -48,11 +46,11 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
               ),
               Consumer<SubjectProvider>(
                 builder: (context, provider, _) {
-                  if (provider.isLoading) {
+                  if (provider.fetchSubjectByIdLoading) {
                     return const LoadingWidget();
                   }
 
-                  if (provider.error == true) {
+                  if (provider.fetchSubByIdError == true) {
                     return const ErrorOccurredWidget();
                   }
 
@@ -87,7 +85,6 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                         Text(
                           student?.teacher ?? 'Not Found',
                           style: context.tl?.copyWith(
-                            fontSize: 17,
                             fontWeight: FontWeight.w400,
                           ),
                         ),
@@ -97,7 +94,7 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                         Text(
                           'Credit : ${student?.credits}',
                           style:
-                              context.tl?.copyWith(fontWeight: FontWeight.w400),
+                              context.tl?.copyWith(fontWeight: FontWeight.w400,fontSize: 17,),
                         ),
                       ],
                     ),

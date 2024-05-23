@@ -23,7 +23,6 @@ class AppTheme {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),
-
       ),
       textTheme: TextTheme(
         displayLarge: _textStyle.displayLarge,
@@ -48,6 +47,18 @@ class AppTheme {
           fixedSize: const Size(double.infinity, 50),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+      ),
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5),
+          ),
+          side: BorderSide.none,
+          backgroundColor: greenColor,
+          textStyle: TextStyle(
+            color: Colors.green,
           ),
         ),
       ),

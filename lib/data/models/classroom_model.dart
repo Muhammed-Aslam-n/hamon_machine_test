@@ -16,7 +16,7 @@ class ClassroomModel extends Classroom {
       name: json['name'],
       layout: json['layout'],
       size: json['size'],
-      subject: json['subject'],
+      subject: json['subject'].toString(),
     );
   }
 

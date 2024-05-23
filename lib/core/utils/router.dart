@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hamon_machine_task/core/utils/app_routes.dart';
+import 'package:hamon_machine_task/domain/entities/classroom.dart';
 import 'package:hamon_machine_task/presentation/screens/classroom/classroom_details_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/classroom/classroom_listing_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/classroom/subject_add_to_class_screen.dart';
@@ -77,8 +78,8 @@ final router = GoRouter(
     GoRoute(
       path: AppRoutes.classroomDetailsScreen.path,
       name: AppRoutes.classroomDetailsScreen.name,
-      pageBuilder: (context, state) => const CupertinoPage(
-        child: ClassroomDetailsScreen(),
+      pageBuilder: (context, state) => CupertinoPage(
+        child: ClassroomDetailsScreen(classroomData: state.extra as Classroom,),
       ),
     ),
     GoRoute(
@@ -91,8 +92,8 @@ final router = GoRouter(
     GoRoute(
       path: AppRoutes.subjectAddToClassScreen.path,
       name: AppRoutes.subjectAddToClassScreen.name,
-      pageBuilder: (context, state) => const CupertinoPage(
-        child: SubjectAddToClassScreen(),
+      pageBuilder: (context, state) =>  CupertinoPage(
+        child: SubjectAddToClassScreen(classroomId: state.extra as int,),
       ),
     ),
     GoRoute(

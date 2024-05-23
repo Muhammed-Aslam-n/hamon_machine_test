@@ -1,4 +1,3 @@
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -6,7 +5,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
 
 /// Loading overlay widget to notify of the on going task or operation
-
 
 typedef CloseLoadingScreen = bool Function();
 typedef UpdateLoadingScreen = bool Function(String text);
@@ -24,10 +22,13 @@ class LoadingScreenController {
 
 class LoadingScreen {
   LoadingScreen._sharedInstance();
+
   static final LoadingScreen _shared = LoadingScreen._sharedInstance();
+
   factory LoadingScreen.instance() => _shared;
 
   LoadingScreenController? _controller;
+
   void show({
     required BuildContext context,
     String text = 'Loading...',
@@ -80,7 +81,7 @@ class LoadingScreen {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const CircularProgressIndicator(strokeWidth: 0.4,color: Colors.purple,),
+                  SpinKitFadingCircle(color: colorScheme.primary, size: 60),
                   StreamBuilder<String>(
                     stream: textController.stream,
                     builder: (context, snapshot) {

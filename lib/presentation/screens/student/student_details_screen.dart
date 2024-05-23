@@ -45,11 +45,11 @@ class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
               ),
               Consumer<StudentProvider>(
                 builder: (context, provider, _) {
-                  if (provider.isLoading) {
+                  if (provider.fetchStudentByIdLoading) {
                     return const LoadingWidget();
                   }
 
-                  if (provider.error == true) {
+                  if (provider.fetchStudentByIdError == true) {
                     return const ErrorOccurredWidget();
                   }
 

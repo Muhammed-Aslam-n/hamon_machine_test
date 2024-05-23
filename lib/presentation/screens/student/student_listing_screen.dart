@@ -33,7 +33,7 @@ class _StudentListingScreenState extends State<StudentListingScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: width * 0.1,
+                height: width * 0.08,
               ),
               Text(
                 'Students',
@@ -70,7 +70,10 @@ class _StudentListingScreenState extends State<StudentListingScreen> {
                         },
                         titleItem: student?.name,
                         subtitleItem: student?.email,
-                        trailingItem: 'Age: ${student?.age}',
+                        trailingItem: Text(
+                          'Age: ${student?.age}',
+                          style: context.lm?.copyWith(fontSize: 17),
+                        ),
                       );
                     },
                     separatorBuilder: (context, index) => const SizedBox(

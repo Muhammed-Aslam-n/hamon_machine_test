@@ -3,7 +3,7 @@ class Classroom {
   final String name;
   final String layout;
   final int size;
-  final int? subject;
+  final String? subject;
 
   Classroom({
     required this.id,

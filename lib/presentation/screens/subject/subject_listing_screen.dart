@@ -7,6 +7,7 @@ import 'package:hamon_machine_task/presentation/providers/subject_providers.dart
 import 'package:hamon_machine_task/presentation/widgets/list_tile_widget.dart';
 import 'package:hamon_machine_task/presentation/widgets/status_widgets.dart';
 import 'package:provider/provider.dart';
+
 class SubjectListingScreen extends StatefulWidget {
   const SubjectListingScreen({super.key});
 
@@ -33,7 +34,7 @@ class _SubjectListingScreenState extends State<SubjectListingScreen> {
           child: Column(
             children: [
               SizedBox(
-                height: width * 0.1,
+                height: width * 0.08,
               ),
               Text(
                 'Subjects',
@@ -58,25 +59,45 @@ class _SubjectListingScreenState extends State<SubjectListingScreen> {
                     );
                   }
 
-                  return ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      final student = provider.subjects?[index];
-                      return ListTileWidget(
-                        onTap: () {
-                          context
-                              .pushNamed(AppRoutes.subjectDetailsScreen.name,extra: student?.id);
+                  return Column(
+                    children: [
+                      ListView.separated(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          final subject = provider.subjects?[index];
+                          return ListTileWidget(
+                            onTap: () {
+                              context.pushNamed(
+                                  AppRoutes.subjectDetailsScreen.name,
+                                  extra: subject?.id);
+                            },
+                            titleItem: subject?.name,
+                            subtitleItem: subject?.teacher,
+                            trailingItem: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  subject?.credits.toString() ?? '0',
+                                  style: context.lm?.copyWith(fontSize: 13),
+                                ),
+                                Text(
+                                  'Credits',
+                                  style: context.lm?.copyWith(fontSize: 13),
+                                ),
+                              ],
+                            ),
+                          );
                         },
-                        titleItem: student?.name,
-                        subtitleItem: student?.teacher,
-                        trailingItem: '${student?.credits}\n Credits',
-                      );
-                    },
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 10,
-                    ),
-                    itemCount: provider.subjects!.length,
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 10,
+                        ),
+                        itemCount: provider.subjects!.length,
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                    ],
                   );
                 },
               ),

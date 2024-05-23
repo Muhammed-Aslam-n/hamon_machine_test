@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:hamon_machine_task/core/network/clients.dart';
 import 'package:hamon_machine_task/core/utils/api_constants.dart';
 import 'package:hamon_machine_task/data/repositories/classroom_repository_impl.dart';
 import 'package:hamon_machine_task/data/repositories/registration_repository_impl.dart';
@@ -29,15 +32,11 @@ import 'presentation/providers/subject_providers.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  Dio dio = Dio(
-    BaseOptions(
-      baseUrl: ApiConstants.baseUrl
-    )
-  );
-  final studentRepository = StudentRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
-  final subjectRepository = SubjectRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
-  final classroomRepository = ClassroomRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
-  final registrationRepository = RegistrationRepositoryImpl(dio: dio, apiKey: ApiConstants.apiKey);
+  final CustomHttpClient httpClient = CustomHttpClient(baseUrl: ApiConstants.baseUrl,);
+  final studentRepository = StudentRepositoryImpl(httpClient: httpClient, apiKey: ApiConstants.apiKey);
+  final subjectRepository = SubjectRepositoryImpl(httpClient: httpClient, apiKey: ApiConstants.apiKey);
+  final classroomRepository = ClassroomRepositoryImpl(httpClient: httpClient, apiKey: ApiConstants.apiKey);
+  final registrationRepository = RegistrationRepositoryImpl(httpClient: httpClient, apiKey: ApiConstants.apiKey);
   final connectivityRepository = ConnectivityServiceImpl();
   runApp(
     MultiProvider(
@@ -59,6 +58,7 @@ void main() async{
             getAllClassrooms: GetAllClassrooms(classroomRepository),
             getClassroomById: GetClassroomById(classroomRepository),
             assignSubjectToClassroom: AssignSubjectToClassroom(classroomRepository),
+            getSubjectById: GetSubjectById(subjectRepository)
           ),
         ),
         ChangeNotifierProvider(

@@ -7,13 +7,13 @@ import 'package:hamon_machine_task/domain/use_cases/get_student_by_id.dart';
 class StudentProvider with ChangeNotifier {
   final GetAllStudents getAllStudents;
   final GetStudentById getStudentById;
-  bool _isLoading = false;
 
-  bool get isLoading => _isLoading;
 
-  bool? _error;
+  bool isLoading = false;
+  bool fetchStudentByIdLoading = false;
 
-  bool? get error => _error;
+  bool? error;
+  bool? fetchStudentByIdError;
 
   StudentProvider({
     required this.getAllStudents,
@@ -29,32 +29,32 @@ class StudentProvider with ChangeNotifier {
 
   Future<void> fetchAllStudents() async {
     try {
-      _isLoading = true;
-      _error = false;
+      isLoading = true;
+      error = false;
       notifyListeners();
       _students = await getAllStudents();
-      _isLoading = false;
+      isLoading = false;
       notifyListeners();
     } catch (exc, stack) {
       printError('ExceptionCaughtWhileFetchingAllStudents $exc \n $stack');
-      _isLoading = false;
-      _error = true;
+      isLoading = false;
+      error = true;
       notifyListeners();
     }
   }
 
   Future<void> fetchStudentById(int id) async {
     try {
-      _isLoading = true;
-      _error = false;
+      fetchStudentByIdLoading = true;
+      fetchStudentByIdError = false;
       notifyListeners();
       _student = await getStudentById(id);
-      _isLoading = false;
+      fetchStudentByIdLoading = false;
       notifyListeners();
     } catch (exc, stack) {
       printError('ExceptionCaughtWhileFetchingSingleStudent $exc \n $stack');
-      _isLoading = false;
-      _error = true;
+      fetchStudentByIdLoading = false;
+      fetchStudentByIdError = true;
       notifyListeners();
     }
   }
