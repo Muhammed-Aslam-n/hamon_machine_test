@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
         context.pushNamed(AppRoutes.classroomListingScreen.name);
         break;
       case 3:
-        context.pushNamed(AppRoutes.registeredStudentDataScreen.name);
+        context.pushNamed(AppRoutes.registrationScreen.name);
         break;
     }
   }

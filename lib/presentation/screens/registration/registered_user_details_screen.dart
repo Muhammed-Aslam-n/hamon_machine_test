@@ -1,33 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
 import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
 import 'package:hamon_machine_task/presentation/providers/registration_provider.dart';
-import 'package:hamon_machine_task/presentation/providers/student_provider.dart';
 import 'package:hamon_machine_task/presentation/widgets/list_tile_widget.dart';
 import 'package:hamon_machine_task/presentation/widgets/status_widgets.dart';
 import 'package:provider/provider.dart';
 
-class SelectStudentForRegScreen extends StatefulWidget {
-  const SelectStudentForRegScreen({super.key});
+class RegisteredUsersScreen extends StatefulWidget {
+  final int registrationId;
+  const RegisteredUsersScreen({super.key, required this.registrationId});
 
   @override
-  State<SelectStudentForRegScreen> createState() =>
-      _SelectStudentForRegScreenState();
+  State<RegisteredUsersScreen> createState() => _RegisteredUsersScreenState();
 }
 
-class _SelectStudentForRegScreenState extends State<SelectStudentForRegScreen> {
-
-  late final RegistrationProvider regProvider;
+class _RegisteredUsersScreenState extends State<RegisteredUsersScreen> {
 
   @override
   void initState() {
-    final provider = Provider.of<StudentProvider>(context, listen: false);
-    regProvider = Provider.of<RegistrationProvider>(context, listen: false);
-    provider.fetchAllStudents();
+    final provider = Provider.of<RegistrationProvider>(context, listen: false);
+    provider.getAllRegistrations();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -43,25 +36,23 @@ class _SelectStudentForRegScreenState extends State<SelectStudentForRegScreen> {
                 height: width * 0.08,
               ),
               Text(
-                'Students',
+                'Registration',
                 style: context.tl,
               ),
               SizedBox(
                 height: width * 0.1,
               ),
-              Consumer<StudentProvider>(
+              Consumer<RegistrationProvider>(
                 builder: (context, provider, _) {
-                  if (provider.isLoading) {
+                  if (provider.registrationLoading) {
                     return const LoadingWidget();
                   }
-
-                  if (provider.error == true) {
+                  if (provider.registrationError == true) {
                     return const ErrorOccurredWidget();
                   }
-
-                  if (provider.students == null) {
+                  if (provider.registrations == null) {
                     return const NoDataFoundWidget(
-                      dataType: 'Student',
+                      dataType: 'Registrations',
                     );
                   }
 
@@ -69,24 +60,22 @@ class _SelectStudentForRegScreenState extends State<SelectStudentForRegScreen> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      final student = provider.students?[index];
+                      final registration = provider.registrations?[index];
+
                       return ListTileWidget(
                         onTap: () {
-                          regProvider.setSelectedStudent(student!);
-                          context.pop();
                         },
-                        titleItem: student?.name,
-                        subtitleItem: student?.email,
-                        trailingItem: Text(
-                          'Age: ${student?.age}',
-                          style: context.lm?.copyWith(fontSize: 17),
-                        ),
+                        titleItem: "Registration Id: #${registration?.id.toString()}",
+                        subtitleItem: '',
+                        showSubtitle: false,
+                        padding: 15,
+                        trailingItem: const Icon(Icons.chevron_right),
                       );
                     },
                     separatorBuilder: (context, index) => const SizedBox(
                       height: 10,
                     ),
-                    itemCount: provider.students!.length,
+                    itemCount: provider.registrations!.length,
                   );
                 },
               ),

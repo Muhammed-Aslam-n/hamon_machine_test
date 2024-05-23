@@ -10,7 +10,8 @@ import 'package:hamon_machine_task/presentation/screens/home/home_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/launch/launch_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/registration/new_registration_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/registration/registered_stu_data_screen.dart';
-import 'package:hamon_machine_task/presentation/screens/registration/registered_user_screen.dart';
+import 'package:hamon_machine_task/presentation/screens/registration/registered_user_details_screen.dart';
+import 'package:hamon_machine_task/presentation/screens/registration/registration_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/registration/select_student_for_reg_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/registration/select_sub_for_reg_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/student/student_details_screen.dart';
@@ -97,13 +98,19 @@ final router = GoRouter(
       ),
     ),
     GoRoute(
-      path: AppRoutes.registeredUsersScreen.path,
-      name: AppRoutes.registeredUsersScreen.name,
-      pageBuilder: (context, state) => const CupertinoPage(
-        child: RegisteredUsersScreen(),
+      path: AppRoutes.registeredUsersDataScreen.path,
+      name: AppRoutes.registeredUsersDataScreen.name,
+      pageBuilder: (context, state) => CupertinoPage(
+        child: RegisteredUsersScreen(registrationId: state.extra as int,),
       ),
     ),
     GoRoute(
+      path: AppRoutes.registrationScreen.path,
+      name: AppRoutes.registrationScreen.name,
+      pageBuilder: (context, state) => const CupertinoPage(
+        child: RegistrationScreen(),
+      ),
+    ), GoRoute(
       path: AppRoutes.newRegistrationScreen.path,
       name: AppRoutes.newRegistrationScreen.name,
       pageBuilder: (context, state) => const CupertinoPage(

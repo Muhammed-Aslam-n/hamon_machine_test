@@ -17,10 +17,10 @@ class SubjectListingScreen extends StatefulWidget {
 
 class _SubjectListingScreenState extends State<SubjectListingScreen> {
   @override
-  void didChangeDependencies() {
+  void initState() {
     final provider = Provider.of<SubjectProvider>(context, listen: false);
     provider.fetchAllSubjects();
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

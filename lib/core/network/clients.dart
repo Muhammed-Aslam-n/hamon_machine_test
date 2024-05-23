@@ -1,3 +1,4 @@
+import 'package:hamon_machine_task/core/utils/api_constants.dart';
 import 'package:http/http.dart' as http;
 class CustomHttpClient {
   final String baseUrl;
@@ -16,9 +17,9 @@ class CustomHttpClient {
     return client.patch(url, headers: headers, body: body);
   }
 
-  Future<http.Response> post(String endpoint, {Map<String, String>? headers, Map<String, String>? body}) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    return client.post(url, headers: headers, body: body);
+  Future<http.Response> post(String endpoint, {Map<String, String>? headers, String? body}) async {
+    final url = Uri.parse('http://nibrahim.pythonanywhere.com/registration/?api_key=${ApiConstants.apiKey}');
+    return client.post(url, body: body,headers: {'Content-Type': 'application/x-www-form-urlencoded'});
   }
 
   Future<http.Response> delete(String endpoint, {Map<String, String>? headers}) async {

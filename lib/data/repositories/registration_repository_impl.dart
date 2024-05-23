@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hamon_machine_task/core/network/clients.dart';
 import 'package:hamon_machine_task/data/models/registration_model.dart';
 import 'package:hamon_machine_task/domain/entities/registration.dart';
@@ -15,6 +15,7 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
   @override
   Future<List<Registration>> getAllRegistrations() async {
     final response = await httpClient.get('/registration', queryParameters: {'api_key': apiKey});
+    debugPrint('getAllRegistrationResponse ${jsonDecode(response.body)}');
     final registrations = (jsonDecode(response.body)['registrations'] as List).map((json) => RegistrationModel.fromJson(json)).toList();
     return registrations;
   }
@@ -27,7 +28,7 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
 
   @override
   Future<void> addRegistration(int studentId, int subjectId) async {
-    await httpClient.post('/registration', body: {'student': studentId.toString(), 'subject': subjectId.toString()}, headers: {'api_key': apiKey});
+    await httpClient.post('/registration', body:'student=$studentId&subject=$subjectId');
   }
 
   @override

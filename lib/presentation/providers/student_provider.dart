@@ -8,7 +8,6 @@ class StudentProvider with ChangeNotifier {
   final GetAllStudents getAllStudents;
   final GetStudentById getStudentById;
 
-
   bool isLoading = false;
   bool fetchStudentByIdLoading = false;
 
@@ -31,15 +30,21 @@ class StudentProvider with ChangeNotifier {
     try {
       isLoading = true;
       error = false;
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
       _students = await getAllStudents();
       isLoading = false;
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     } catch (exc, stack) {
-      printError('ExceptionCaughtWhileFetchingAllStudents $exc \n $stack');
+      debugPrint('ExceptionCaughtWhileFetchingAllStudents $exc \n $stack');
       isLoading = false;
       error = true;
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     }
   }
 
@@ -47,15 +52,21 @@ class StudentProvider with ChangeNotifier {
     try {
       fetchStudentByIdLoading = true;
       fetchStudentByIdError = false;
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
       _student = await getStudentById(id);
       fetchStudentByIdLoading = false;
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     } catch (exc, stack) {
-      printError('ExceptionCaughtWhileFetchingSingleStudent $exc \n $stack');
+      debugPrint('ExceptionCaughtWhileFetchingSingleStudent $exc \n $stack');
       fetchStudentByIdLoading = false;
       fetchStudentByIdError = true;
-      notifyListeners();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        notifyListeners();
+      });
     }
   }
 }
