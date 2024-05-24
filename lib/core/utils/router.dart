@@ -3,11 +3,14 @@ import 'package:go_router/go_router.dart';
 import 'package:hamon_machine_task/core/utils/app_routes.dart';
 import 'package:hamon_machine_task/domain/entities/classroom.dart';
 import 'package:hamon_machine_task/domain/entities/registration.dart';
+import 'package:hamon_machine_task/presentation/privacy_policy/privacy_policy.dart';
+import 'package:hamon_machine_task/presentation/screens/about_app/about_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/classroom/classroom_details_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/classroom/classroom_listing_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/classroom/subject_add_to_class_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/classroom/subject_change_for_classroom_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/home/home_screen.dart';
+import 'package:hamon_machine_task/presentation/screens/invite_friends/invite_friends_view.dart';
 import 'package:hamon_machine_task/presentation/screens/launch/launch_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/registration/new_registration_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/registration/registered_stu_data_screen.dart';
@@ -19,6 +22,7 @@ import 'package:hamon_machine_task/presentation/screens/student/student_details_
 import 'package:hamon_machine_task/presentation/screens/student/student_listing_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/subject/subject_details_screen.dart';
 import 'package:hamon_machine_task/presentation/screens/subject/subject_listing_screen.dart';
+import 'package:hamon_machine_task/presentation/terms_and_condition/terms_and_condition.dart';
 
 /// Router configuration for application.
 /// Whenever new views added, it should be configured here clearly.
@@ -143,6 +147,31 @@ final router = GoRouter(
         ),
       );
       },
+    ),
+    GoRoute(
+      path: AppRoutes.inviteFriendsScreen.path,
+      name: AppRoutes.inviteFriendsScreen.name,
+      pageBuilder: (context, state) => const CupertinoPage(
+        child: InviteFriendsScreen(),
+      ),
+    ),GoRoute(
+      path: AppRoutes.aboutScreen.path,
+      name: AppRoutes.aboutScreen.name,
+      pageBuilder: (context, state) => const CupertinoPage(
+        child: AboutScreen(),
+      ),
+    ),GoRoute(
+      path: AppRoutes.privacyPolicy.path,
+      name: AppRoutes.privacyPolicy.name,
+      pageBuilder: (context, state) => const CupertinoPage(
+        child: PrivacyPolicyScreen(),
+      ),
+    ),GoRoute(
+      path: AppRoutes.termsAndCondition.path,
+      name: AppRoutes.termsAndCondition.name,
+      pageBuilder: (context, state) => const CupertinoPage(
+        child: TermsAndConditionsScreen(),
+      ),
     ),
   ],
 );

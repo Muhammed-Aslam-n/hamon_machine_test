@@ -41,8 +41,13 @@ class AppRoutes {
       Route(path: '/registrationScreen', name: 'registrationScreen');
   static Route registeredStudentDataScreen =
       Route(path: '/registeredStudentData', name: 'registeredStudentData');
-// static Route Screen = Route(path: '/', name: '');
-// static Route Screen = Route(path: '/', name: '');
+  static Route aboutScreen = Route(path: '/aboutScreen', name: 'aboutScreen');
+  static Route inviteFriendsScreen =
+      Route(path: '/inviteFriendsScreen', name: 'inviteFriendsScreen');
+  static Route privacyPolicy =
+      Route(path: '/privacyPolicy', name: 'PrivacyPolicy');
+  static Route termsAndCondition =
+      Route(path: '/termsAndCondition', name: 'termsAndCondition');
 // static Route Screen = Route(path: '/', name: '');
 // static Route Screen = Route(path: '/', name: '');
 }
