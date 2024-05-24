@@ -17,10 +17,10 @@ class StudentDetailsScreen extends StatefulWidget {
 
 class _StudentDetailsScreenState extends State<StudentDetailsScreen> {
   @override
-  void didChangeDependencies() {
+  void initState() {
     final provider = Provider.of<StudentProvider>(context, listen: false);
     provider.fetchStudentById(widget.studentId);
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override

@@ -23,7 +23,9 @@ class CustomHttpClient {
   }
 
   Future<http.Response> delete(String endpoint, {Map<String, String>? headers}) async {
-    final url = Uri.parse('$baseUrl$endpoint');
-    return client.delete(url, headers: headers);
+    // final url = Uri.parse('$baseUrl$endpoint');
+    final url = Uri.parse('http://nibrahim.pythonanywhere.com/registration/$endpoint?api_key=${ApiConstants.apiKey}');
+
+    return client.delete(url, headers: {'Content-Type': 'application/x-www-form-urlencoded'});
   }
 }

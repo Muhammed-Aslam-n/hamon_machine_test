@@ -4,6 +4,7 @@ import 'package:hamon_machine_task/core/utils/app_routes.dart';
 import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
 import 'package:hamon_machine_task/presentation/providers/registration_provider.dart';
 import 'package:hamon_machine_task/presentation/widgets/list_tile_widget.dart';
+import 'package:hamon_machine_task/presentation/widgets/registration_action_button.dart';
 import 'package:hamon_machine_task/presentation/widgets/status_widgets.dart';
 import 'package:provider/provider.dart';
 
@@ -64,10 +65,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
                       return ListTileWidget(
                         onTap: () {
-                          context.pushNamed(AppRoutes.registeredStudentDataScreen.name,
-                              extra: registration?.id);
+                          context.pushNamed(
+                            AppRoutes.registeredStudentDataScreen.name,
+                            extra: registration,
+                          );
                         },
-                        titleItem: "Registration Id: #${registration?.id.toString()}",
+                        titleItem:
+                            "Registration Id: #${registration?.id.toString()}",
                         subtitleItem: '',
                         showSubtitle: false,
                         padding: 15,
@@ -85,29 +89,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        margin: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-        child: OutlinedButton(
-          onPressed: () {
-            context.pushNamed(AppRoutes.newRegistrationScreen.name);
-          },
-          style: OutlinedButton.styleFrom(
-            backgroundColor:
-                const Color(0xFF007AFF).withOpacity(0.3).withAlpha(50),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Text(
-              'New Registration',
-              style: context.tm?.copyWith(
-                fontSize: 17,
-                fontWeight: FontWeight.w600,
-                color: const Color(0xFF007AFF),
-              ),
-            ),
-          ),
-        ),
+      bottomNavigationBar: RegistrationActionButton(
+        onTap: () {
+          context.pushNamed(AppRoutes.newRegistrationScreen.name);
+        },
+        action: 'New Registration',
+        bgColor: const Color(0xFF007AFF).withOpacity(0.3).withAlpha(50),
+        textColor: const Color(0xFF007AFF),
       ),
     );
   }

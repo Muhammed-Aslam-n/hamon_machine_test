@@ -111,8 +111,15 @@ class RegistrationProvider with ChangeNotifier {
     }
   }
 
-  Future<void> removeExistingRegistration(int id) async {
-    await removeRegistration(id);
-    await fetchAllRegistrations();
+
+  Future<bool> removeExistingRegistration(int id) async {
+    try{
+      await removeRegistration(id);
+      await fetchAllRegistrations();
+      return true;
+    }catch(exc,stack){
+      debugPrint('ExceptionCaughtWhileRemovingExistingRegistration $exc \n $stack');
+      return false;
+    }
   }
 }

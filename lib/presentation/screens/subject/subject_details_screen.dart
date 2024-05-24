@@ -18,10 +18,10 @@ class SubjectDetailsScreen extends StatefulWidget {
 
 class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
   @override
-  void didChangeDependencies() {
+  void initState() {
     final provider = Provider.of<SubjectProvider>(context, listen: false);
     provider.fetchSubjectById(widget.subjectId);
-    super.didChangeDependencies();
+    super.initState();
   }
 
   @override
@@ -59,7 +59,7 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                       dataType: 'Subject',
                     );
                   }
-                  final Subject? student = provider.subject;
+                  final Subject? subject = provider.subject;
                   return Container(
                     alignment: Alignment.center,
                     child: Column(
@@ -75,7 +75,7 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                           height: 10,
                         ),
                         Text(
-                          student?.name ?? 'Not Found',
+                          subject?.name ?? 'Not Found',
                           style:
                               context.tl?.copyWith(fontWeight: FontWeight.w400),
                         ),
@@ -83,7 +83,7 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                           height: 10,
                         ),
                         Text(
-                          student?.teacher ?? 'Not Found',
+                          subject?.teacher ?? 'Not Found',
                           style: context.tl?.copyWith(
                             fontWeight: FontWeight.w400,
                           ),
@@ -92,7 +92,7 @@ class _SubjectDetailsScreenState extends State<SubjectDetailsScreen> {
                           height: 10,
                         ),
                         Text(
-                          'Credit : ${student?.credits}',
+                          'Credit : ${subject?.credits}',
                           style:
                               context.tl?.copyWith(fontWeight: FontWeight.w400,fontSize: 17,),
                         ),

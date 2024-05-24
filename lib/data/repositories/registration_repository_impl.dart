@@ -33,6 +33,6 @@ class RegistrationRepositoryImpl implements RegistrationRepository {
 
   @override
   Future<void> removeRegistration(int id) async {
-    await httpClient.delete('/registration/$id', headers: {'api_key': apiKey});
+    await httpClient.delete('$id', headers: {'api_key': apiKey});
   }
 }
