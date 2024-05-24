@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
 import 'package:hamon_machine_task/presentation/widgets/toast.dart';
 
 /// Widget to share invite to others
@@ -14,18 +15,24 @@ class InviteFriendsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const SizedBox(height: 40),
-            const Text(
-              'Academy',
+            SizedBox(
+              height: width * 0.1,
             ),
-            const SizedBox(height: 60),
+            Text(
+              'Invite Friends',
+              style: context.tl,
+            ),
+            SizedBox(
+              height: width * 0.1,
+            ),
             const Text(
               'Discover the easiness of logging academic logs together! Share the excitement of exclusive features, endless improvements, and unbeatable discounts with your friends. Invite them to join our Academy community and unlock amazing rewards for both you and your friends. With a plethora of options and fantastic savings, together, we can redefine the academic experience. Start the trend and spread the joy of managing academics with friends today!',
             ),
