@@ -40,9 +40,6 @@ dependencies:
   provider:
   shared_preferences:
   go_router: ^13.2.0
-  google_fonts: ^6.1.0
-  iconly: ^1.0.1
-  dio: ^5.4.0
   connectivity_plus: 5.0.2
   http:
 

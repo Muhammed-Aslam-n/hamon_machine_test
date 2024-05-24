@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hamon_machine_task/core/utils/app_assets.dart';
 import 'package:hamon_machine_task/core/utils/app_routes.dart';
-import 'package:hamon_machine_task/core/utils/logger.dart';
 import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
 
 
@@ -131,9 +130,9 @@ class _LaunchScreenState extends State<LaunchScreen> with TickerProviderStateMix
                       ),
                     ),
                     Text(
-                      'ClassManager',
+                      'Academy',
                       style: context.tl
-                          ?.copyWith(color: context.theme.primaryColor),
+                          ?.copyWith(color: Colors.pink),
                     )
                   ],
                 ),
