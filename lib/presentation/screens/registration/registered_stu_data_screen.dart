@@ -5,6 +5,7 @@ import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
 import 'package:hamon_machine_task/domain/entities/registration.dart';
 import 'package:hamon_machine_task/domain/entities/students_model.dart';
 import 'package:hamon_machine_task/domain/entities/subject_entities.dart';
+import 'package:hamon_machine_task/presentation/providers/connectivity_provider.dart';
 import 'package:hamon_machine_task/presentation/providers/registration_provider.dart';
 import 'package:hamon_machine_task/presentation/providers/student_provider.dart';
 import 'package:hamon_machine_task/presentation/providers/subject_providers.dart';
@@ -45,86 +46,100 @@ class _RegisteredStudentDataScreenState
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: Column(
-            children: [
-              SizedBox(
-                height: width * 0.08,
-              ),
-              Text(
-                'Registration',
-                style: context.tl,
-              ),
-              SizedBox(
-                height: width * 0.1,
-              ),
-              Consumer<StudentProvider>(
-                builder: (context, provider, _) {
-                  if (provider.fetchStudentByIdLoading) {
-                    return const LoadingWidget();
-                  }
+          child: Consumer<ConnectivityProvider>(
+              builder: (context, connectivity, _) {
+            if (!connectivity.isConnected) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: width * 0.6,
+                  ),
+                  const NoNetworkWidget(),
+                ],
+              );
+            }
+            return Column(
+              children: [
+                SizedBox(
+                  height: width * 0.08,
+                ),
+                Text(
+                  'Registration',
+                  style: context.tl,
+                ),
+                SizedBox(
+                  height: width * 0.1,
+                ),
+                Consumer<StudentProvider>(
+                  builder: (context, provider, _) {
+                    if (provider.fetchStudentByIdLoading) {
+                      return const LoadingWidget();
+                    }
 
-                  if (provider.fetchStudentByIdError == true) {
-                    return const ErrorOccurredWidget();
-                  }
+                    if (provider.fetchStudentByIdError == true) {
+                      return const ErrorOccurredWidget();
+                    }
 
-                  if (provider.student == null) {
-                    return const NoDataFoundWidget(
-                      dataType: 'Student',
+                    if (provider.student == null) {
+                      return const NoDataFoundWidget(
+                        dataType: 'Student',
+                      );
+                    }
+                    final Student? student = provider.student;
+                    return RegistrationDetailsTile(
+                      title: 'Student details',
+                      subtitle1: student?.name ?? 'Not found',
+                      subtitle2: student?.email ?? 'Not found',
+                      trailing: Text(
+                        'Age: ${student?.age}',
+                        style: context.lm?.copyWith(fontSize: 17),
+                      ),
                     );
-                  }
-                  final Student? student = provider.student;
-                  return RegistrationDetailsTile(
-                    title: 'Student details',
-                    subtitle1: student?.name ?? 'Not found',
-                    subtitle2: student?.email ?? 'Not found',
-                    trailing: Text(
-                      'Age: ${student?.age}',
-                      style: context.lm?.copyWith(fontSize: 17),
-                    ),
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Consumer<SubjectProvider>(
-                builder: (context, provider, _) {
-                  if (provider.fetchSubjectByIdLoading) {
-                    return const LoadingWidget();
-                  }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Consumer<SubjectProvider>(
+                  builder: (context, provider, _) {
+                    if (provider.fetchSubjectByIdLoading) {
+                      return const LoadingWidget();
+                    }
 
-                  if (provider.fetchSubByIdError == true) {
-                    return const ErrorOccurredWidget();
-                  }
+                    if (provider.fetchSubByIdError == true) {
+                      return const ErrorOccurredWidget();
+                    }
 
-                  if (provider.subject == null) {
-                    return const NoDataFoundWidget(
-                      dataType: 'Subject',
+                    if (provider.subject == null) {
+                      return const NoDataFoundWidget(
+                        dataType: 'Subject',
+                      );
+                    }
+                    final Subject? subject = provider.subject;
+                    return RegistrationDetailsTile(
+                      title: 'Subject details',
+                      subtitle1: subject?.name ?? 'Not found',
+                      subtitle2: subject?.teacher ?? 'Not found',
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            subject?.credits.toString() ?? '0',
+                            style: context.lm?.copyWith(fontSize: 13),
+                          ),
+                          Text(
+                            'Credits',
+                            style: context.lm?.copyWith(fontSize: 13),
+                          ),
+                        ],
+                      ),
                     );
-                  }
-                  final Subject? subject = provider.subject;
-                  return RegistrationDetailsTile(
-                    title: 'Subject details',
-                    subtitle1: subject?.name ?? 'Not found',
-                    subtitle2: subject?.teacher ?? 'Not found',
-                    trailing: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          subject?.credits.toString() ?? '0',
-                          style: context.lm?.copyWith(fontSize: 13),
-                        ),
-                        Text(
-                          'Credits',
-                          style: context.lm?.copyWith(fontSize: 13),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
+                  },
+                ),
+              ],
+            );
+          }),
         ),
       ),
       bottomNavigationBar: RegistrationActionButton(
@@ -174,20 +189,27 @@ class _RegisteredStudentDataScreenState
   }
 
   void removeExistingReg() async {
-    LoadingScreen.instance()
-        .show(context: context, text: 'Please wait, removing the registration');
-    final regProvider =
-        Provider.of<RegistrationProvider>(context, listen: false);
-    final res = await regProvider
-        .removeExistingRegistration(widget.registrationData.id);
+    final connectivityProvider =
+        Provider.of<ConnectivityProvider>(context, listen: false);
+    if (connectivityProvider.isConnected) {
+      LoadingScreen.instance().show(
+          context: context, text: 'Please wait, removing the registration');
+      final regProvider =
+          Provider.of<RegistrationProvider>(context, listen: false);
+      final res = await regProvider
+          .removeExistingRegistration(widget.registrationData.id);
 
-    if (res == true && context.mounted) {
-      LoadingScreen.instance().hide();
-      context.pop();
-      showToast(context, 'Registration deleted', success: true);
+      if (res == true && context.mounted) {
+        LoadingScreen.instance().hide();
+        context.pop();
+        showToast(context, 'Registration deleted', success: true);
+      } else {
+        LoadingScreen.instance().hide();
+        showToast(context, 'Some error occurred!', failure: true);
+      }
     } else {
-      LoadingScreen.instance().hide();
-      showToast(context, 'Some error occurred!', failure: true);
+      showToast(context, 'No network, please connect and try again',
+          info: true);
     }
   }
 }

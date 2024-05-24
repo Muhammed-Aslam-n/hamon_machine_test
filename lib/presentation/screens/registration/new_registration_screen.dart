@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hamon_machine_task/core/utils/app_routes.dart';
 import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
+import 'package:hamon_machine_task/presentation/providers/connectivity_provider.dart';
 import 'package:hamon_machine_task/presentation/providers/registration_provider.dart';
 import 'package:hamon_machine_task/presentation/widgets/list_tile_widget.dart';
 import 'package:hamon_machine_task/presentation/widgets/loading_overlay.dart';
@@ -152,15 +153,21 @@ class _NewRegistrationScreenState extends State<NewRegistrationScreen> {
   }
 
   Future completeNewRegistration(int studentId, int subjectId) async {
-    LoadingScreen.instance().show(
-        context: context, text: 'Please wait, Completing your registration');
-    final res = await provider.addNewRegistration(studentId, subjectId);
-    if (res == true && context.mounted) {
-      LoadingScreen.instance().hide();
-      showToast(context, 'Registered successfully', success: true);
-      context.pop();
-    } else if (context.mounted) {
-      LoadingScreen.instance().hide();
+    final connectivityProvider = Provider.of<ConnectivityProvider>(context,listen: false);
+    if(connectivityProvider.isConnected){
+      LoadingScreen.instance().show(
+          context: context, text: 'Please wait, Completing your registration');
+      final res = await provider.addNewRegistration(studentId, subjectId);
+      if (res == true && context.mounted) {
+        LoadingScreen.instance().hide();
+        showToast(context, 'Registered successfully', success: true);
+        context.pop();
+      } else if (context.mounted) {
+        LoadingScreen.instance().hide();
+      }
+    }else{
+      showToast(context, 'No network, please connect and try again',info: true);
     }
+
   }
 }

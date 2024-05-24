@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hamon_machine_task/core/utils/logger.dart';
 import 'package:hamon_machine_task/domain/entities/classroom.dart';
-import 'package:hamon_machine_task/domain/entities/students_model.dart';
 import 'package:hamon_machine_task/domain/entities/subject_entities.dart';
 import 'package:hamon_machine_task/domain/use_cases/assign_subject_to_classroom.dart';
 import 'package:hamon_machine_task/domain/use_cases/get_all_classrooms.dart';

@@ -4,13 +4,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hamon_machine_task/core/network/clients.dart';
 import 'package:hamon_machine_task/core/utils/api_constants.dart';
+import 'package:hamon_machine_task/data/data_sources/connectivity_data_source.dart';
 import 'package:hamon_machine_task/data/repositories/classroom_repository_impl.dart';
+import 'package:hamon_machine_task/data/repositories/connectivity_repository.dart';
 import 'package:hamon_machine_task/data/repositories/registration_repository_impl.dart';
 import 'package:hamon_machine_task/data/repositories/student_repository_impl.dart';
 import 'package:hamon_machine_task/data/repositories/subject_repository_impl.dart';
-import 'package:hamon_machine_task/data/services/connectivity_service_impl.dart';
 import 'package:hamon_machine_task/domain/use_cases/add_registration.dart';
 import 'package:hamon_machine_task/domain/use_cases/assign_subject_to_classroom.dart';
+import 'package:hamon_machine_task/domain/use_cases/connectivity_service.dart';
 import 'package:hamon_machine_task/domain/use_cases/get_all_classrooms.dart';
 import 'package:hamon_machine_task/domain/use_cases/get_all_registrations.dart';
 import 'package:hamon_machine_task/domain/use_cases/get_all_students.dart';
@@ -37,7 +39,11 @@ void main() async{
   final subjectRepository = SubjectRepositoryImpl(httpClient: httpClient, apiKey: ApiConstants.apiKey);
   final classroomRepository = ClassroomRepositoryImpl(httpClient: httpClient, apiKey: ApiConstants.apiKey);
   final registrationRepository = RegistrationRepositoryImpl(httpClient: httpClient, apiKey: ApiConstants.apiKey);
-  final connectivityRepository = ConnectivityServiceImpl();
+
+  final connectivityDataSource = ConnectivityDataSource();
+  final connectivityRepository = ConnectivityRepositoryImpl(connectivityDataSource);
+  final checkConnectivity = CheckConnectivity(connectivityRepository);
+
   runApp(
     MultiProvider(
       providers: [
@@ -70,9 +76,7 @@ void main() async{
           ),
         ),
         ChangeNotifierProvider(
-          create: (_) => ConnectivityProvider(
-            connectivityService: connectivityRepository,
-          ),
+          create: (_) => ConnectivityProvider(checkConnectivity: checkConnectivity),
         ),
       ],
       child: const App(),

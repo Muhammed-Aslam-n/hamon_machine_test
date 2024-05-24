@@ -1,18 +1,27 @@
-import 'package:flutter/widgets.dart';
-import 'package:hamon_machine_task/domain/services/connectivity_service.dart';
+// presentation/providers/connectivity_provider.dart
 
-class ConnectivityProvider with ChangeNotifier {
-  final ConnectivityService connectivityService;
+import 'package:flutter/cupertino.dart';
+import 'package:hamon_machine_task/domain/use_cases/connectivity_service.dart';
+class ConnectivityProvider extends ChangeNotifier {
 
-  bool _isConnected = false;
-  bool get isConnected => _isConnected;
+  final CheckConnectivity checkConnectivity;
 
-  ConnectivityProvider({required this.connectivityService}) {
-    _checkConnectivity();
+  ConnectivityProvider({required this.checkConnectivity}) {
+    _initConnectivity();
   }
 
-  Future<void> _checkConnectivity() async {
-    _isConnected = await connectivityService.isConnected();
+  bool _isConnected = true;
+
+  bool get isConnected => _isConnected;
+
+  void _initConnectivity() async {
+    final status = await checkConnectivity.execute();
+    _isConnected = status.isConnected;
     notifyListeners();
+
+    checkConnectivity.repository.connectivityStream.listen((status) {
+      _isConnected = status.isConnected;
+      notifyListeners();
+    });
   }
 }

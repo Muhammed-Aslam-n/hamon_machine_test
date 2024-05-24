@@ -4,7 +4,10 @@ import 'package:hamon_machine_task/core/utils/app_assets.dart';
 import 'package:hamon_machine_task/core/utils/app_routes.dart';
 import 'package:hamon_machine_task/core/utils/theme/app_theme.dart';
 import 'package:hamon_machine_task/core/utils/theme/text_style_ext.dart';
+import 'package:hamon_machine_task/presentation/providers/connectivity_provider.dart';
 import 'package:hamon_machine_task/presentation/widgets/fade_in_slide.dart';
+import 'package:hamon_machine_task/presentation/widgets/status_widgets.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -40,63 +43,75 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: width * 0.1,
-            ),
-            const HomeScreenWelcomeSection(),
-            SizedBox(
-              height: width * 0.05,
-            ),
-            GridView.builder(
-              itemCount: homeScreenItems.length,
-              shrinkWrap: true,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                crossAxisSpacing: 10,
-                mainAxisSpacing: 10,
-                childAspectRatio: 2 / 2.8,
-              ),
-              padding: const EdgeInsets.all(10),
-              itemBuilder: (itemBuilder, index) {
-                return GestureDetector(
-                  onTap: () => navigateToScreen(index),
-                  child: FadeInSlide(
-                    duration: 0.4,
-                    direction: FadeSlideDirection.ltr,
-                    child: Container(
-                      margin: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: homeScreenItems[index]['bgColor'],
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset(
-                            homeScreenItems[index]['icon'],
-                            width: 48,
-                            height: 48,
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            homeScreenItems[index]['name'],
-                            style: context.tm,
-                          ),
-                        ],
-                      ),
-                    ),
+        child: Consumer<ConnectivityProvider>(
+          builder: (context,connectivity,_) {
+            if(!connectivity.isConnected){
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: width*0.6,),
+                  const NoNetworkWidget(),
+                ],
+              );
+            }
+            return Column(
+              children: [
+                SizedBox(
+                  height: width * 0.1,
+                ),
+                const HomeScreenWelcomeSection(),
+                SizedBox(
+                  height: width * 0.05,
+                ),
+                GridView.builder(
+                  itemCount: homeScreenItems.length,
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 2 / 2.8,
                   ),
-                );
-              },
-            ),
-          ],
+                  padding: const EdgeInsets.all(10),
+                  itemBuilder: (itemBuilder, index) {
+                    return GestureDetector(
+                      onTap: () => navigateToScreen(index),
+                      child: FadeInSlide(
+                        duration: 0.4,
+                        direction: FadeSlideDirection.ltr,
+                        child: Container(
+                          margin: const EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            color: homeScreenItems[index]['bgColor'],
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset(
+                                homeScreenItems[index]['icon'],
+                                width: 48,
+                                height: 48,
+                              ),
+                              const SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                homeScreenItems[index]['name'],
+                                style: context.tm,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            );
+          }
         ),
       ),
     );
